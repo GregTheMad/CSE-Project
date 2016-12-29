@@ -1,16 +1,6 @@
 ﻿  main.cpp
   ofApp.cpp
-     Creating library bin\mySketch_debug.lib and object bin\mySketch_debug.exp
-  mySketch.vcxproj -> C:\FHPro\CSE\mySketch\bin\mySketch_debug.exe
+  mySketch.vcxproj -> D:\FHPro\CSE\mySketch\bin\mySketch_debug.exe
   mySketch.vcxproj -> bin\mySketch_debug.pdb (Full PDB)
   
-  	                   9	C:\FHPro\CSE\of_v0.9.8_vs_release\export\vs\Win32\
-  	    Neue Datei		 2939392	C:\FHPro\CSE\of_v0.9.8_vs_release\export\vs\Win32\assimp.dll
-  	    Neue Datei		 1266176	C:\FHPro\CSE\of_v0.9.8_vs_release\export\vs\Win32\fmodex.dll
-  	    Neue Datei		 1312768	C:\FHPro\CSE\of_v0.9.8_vs_release\export\vs\Win32\fmodexL.dll
-  	    Neue Datei		 5647872	C:\FHPro\CSE\of_v0.9.8_vs_release\export\vs\Win32\FreeImage.dll
-  	    Neue Datei		  580608	C:\FHPro\CSE\of_v0.9.8_vs_release\export\vs\Win32\freetype.dll
-  	    Neue Datei		  237568	C:\FHPro\CSE\of_v0.9.8_vs_release\export\vs\Win32\glut32.dll
-  	    Neue Datei		 1178624	C:\FHPro\CSE\of_v0.9.8_vs_release\export\vs\Win32\libeay32.dll
-  	    Neue Datei		  269824	C:\FHPro\CSE\of_v0.9.8_vs_release\export\vs\Win32\ssleay32.dll
-  	    Neue Datei		   69632	C:\FHPro\CSE\of_v0.9.8_vs_release\export\vs\Win32\Zlib.dll
+  	                   9	D:\FHPro\CSE\of_v0.9.8_vs_release\export\vs\Win32\

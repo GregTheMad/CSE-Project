@@ -1,6 +1,11 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofMath.h"
+#include "MarchingCube.h"
+#include "Skybox.h"
+#include "GameObject.h"
+#include "Heightmap.h"
 
 class ofApp : public ofBaseApp{
 
@@ -21,4 +26,9 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 		
+private:
+	ofColor _color;
+	ofLight _sun;
+
+	GameObject* hm_;
 };
