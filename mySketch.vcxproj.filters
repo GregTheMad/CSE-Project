@@ -16,13 +16,22 @@
     <ClCompile Include="src\Skybox.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Heightmap.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="src\Engine\Heightmap.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\LODModel.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Transform.cpp">
+      <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
       <UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine">
+      <UniqueIdentifier>{ca5823c1-d837-4817-b735-fac366f20729}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -41,11 +50,20 @@
     <ClInclude Include="src\Voxel.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject.h">
-      <Filter>src</Filter>
+    <ClInclude Include="src\Engine\GameObject.h">
+      <Filter>src\engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\Heightmap.h">
-      <Filter>src</Filter>
+    <ClInclude Include="src\Engine\Heightmap.h">
+      <Filter>src\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\LODModel.h">
+      <Filter>src\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Transform.h">
+      <Filter>src\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\engine.h">
+      <Filter>src\engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

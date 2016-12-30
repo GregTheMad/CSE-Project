@@ -4,8 +4,7 @@
 #include "ofMath.h"
 #include "MarchingCube.h"
 #include "Skybox.h"
-#include "GameObject.h"
-#include "Heightmap.h"
+#include "engine/engine.h"
 
 class ofApp : public ofBaseApp{
 
@@ -30,5 +29,6 @@ private:
 	ofColor _color;
 	ofLight _sun;
 
-	GameObject* hm_;
+	engine::GameObject* hm_;
+	engine::GameObject* testmodel;
 };

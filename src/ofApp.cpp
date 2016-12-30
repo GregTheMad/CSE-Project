@@ -41,8 +41,18 @@ void ofApp::setup(){
 	timeOfDay = 0;
 	durationOfDay = 30;
 
-	hm_ = new Heightmap(100, 20.0f);
+	hm_ = new engine::Heightmap(100, 20.0f);
 	hm_->Initialize();
+
+	//engine::LODModel t = engine::LODModel("Models/Suzanne0.ply", 0);
+	
+	testmodel = new engine::LODModel("Models/Suzanne0.ply", 0);
+
+	dynamic_cast<engine::LODModel*>(testmodel)->addLOD("Models/Suzanne0.ply", 10.0f);
+	dynamic_cast<engine::LODModel*>(testmodel)->addLOD("Models/Suzanne1.ply", 20.0f);
+	dynamic_cast<engine::LODModel*>(testmodel)->addLOD("Models/Suzanne2.ply", 30.0f);
+	//testmodel->Initialize();
+	testmodel->m_transform.setPosition(ofVec3f(0, 10, 10));
 }
 
 MarchingCube mc;
@@ -132,6 +142,7 @@ void ofApp::draw(){
 	ofDrawIcoSphere(8,8,8,-2);
 
 	hm_->Draw();
+	testmodel->Draw();
 
 	cam.end();
 	ofDisableDepthTest();

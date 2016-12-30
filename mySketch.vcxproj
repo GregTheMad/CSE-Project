@@ -173,7 +173,9 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Heightmap.cpp" />
+    <ClCompile Include="src\Engine\Heightmap.cpp" />
+    <ClCompile Include="src\Engine\LODModel.cpp" />
+    <ClCompile Include="src\Engine\Transform.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MarchingCube.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
@@ -181,8 +183,11 @@
     <ClCompile Include="src\Skybox.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\GameObject.h" />
-    <ClInclude Include="src\Heightmap.h" />
+    <ClInclude Include="src\Engine\engine.h" />
+    <ClInclude Include="src\Engine\GameObject.h" />
+    <ClInclude Include="src\Engine\Heightmap.h" />
+    <ClInclude Include="src\Engine\LODModel.h" />
+    <ClInclude Include="src\Engine\Transform.h" />
     <ClInclude Include="src\MarchingCube.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\PerlinNoise.h" />
