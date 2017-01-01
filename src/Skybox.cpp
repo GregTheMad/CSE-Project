@@ -32,35 +32,35 @@ namespace game
 		//Draw Galactic Background
 		glBegin(GL_QUADS);
 		// front face
-		glTexCoord2f(1000.0f, 1000.0f); glVertex3f(-200, 200, 200);
-		glTexCoord2f(0.0f, 1000.0f); glVertex3f(200, 200, 200);
+		glTexCoord2f(0.333f, 0.333f); glVertex3f(-200, 200, 200);
+		glTexCoord2f(0.0f, 0.333f); glVertex3f(200, 200, 200);
 		glTexCoord2f(0.0f, 0.0f); glVertex3f(200, -200, 200);
-		glTexCoord2f(1000.0f, 0.0f); glVertex3f(-200, -200, 200);
+		glTexCoord2f(0.333f, 0.0f); glVertex3f(-200, -200, 200);
 		// right face
-		glTexCoord2f(1000.0f, 1000.0f); glVertex3f(-200, 200, 200);
-		glTexCoord2f(2000.0f, 1000.0f); glVertex3f(-200, 200, -200);
-		glTexCoord2f(2000.0f, 0.0f); glVertex3f(-200, -200, -200);
-		glTexCoord2f(1000.0f, 0.0f); glVertex3f(-200, -200, 200);
+		glTexCoord2f(0.333f, 0.333f); glVertex3f(-200, 200, 200);
+		glTexCoord2f(0.666f, 0.333f); glVertex3f(-200, 200, -200);
+		glTexCoord2f(0.666f, 0.0f); glVertex3f(-200, -200, -200);
+		glTexCoord2f(0.333f, 0.0f); glVertex3f(-200, -200, 200);
 		// back face
-		glTexCoord2f(2000.0f, 1000.0f); glVertex3f(-200, 200, -200);
-		glTexCoord2f(3000.0f, 1000.0f); glVertex3f(200, 200, -200);
-		glTexCoord2f(3000.0f, 0.0f); glVertex3f(200, -200, -200);
-		glTexCoord2f(2000.0f, 0.0f); glVertex3f(-200, -200, -200);
+		glTexCoord2f(0.666f, 0.333f); glVertex3f(-200, 200, -200);
+		glTexCoord2f(1.0f, 0.333f); glVertex3f(200, 200, -200);
+		glTexCoord2f(1.0f, 0.0f); glVertex3f(200, -200, -200);
+		glTexCoord2f(0.666f, 0.0f); glVertex3f(-200, -200, -200);
 		// left face
-		glTexCoord2f(0.0f, 2000.0f); glVertex3f(200, 200, -200);
-		glTexCoord2f(1000.0f, 2000.0f); glVertex3f(200, 200, 200);
-		glTexCoord2f(1000.0f, 1000.0f); glVertex3f(200, -200, 200);
-		glTexCoord2f(0.0f, 1000.0f); glVertex3f(200, -200, -200);
+		glTexCoord2f(0.0f, 0.666f); glVertex3f(200, 200, -200);
+		glTexCoord2f(0.333f, 0.666f); glVertex3f(200, 200, 200);
+		glTexCoord2f(0.333f, 0.333f); glVertex3f(200, -200, 200);
+		glTexCoord2f(0.0f, 0.333f); glVertex3f(200, -200, -200);
 		// top face
-		glTexCoord2f(2000.0f, 1000.0f); glVertex3f(200, -200, 200);
-		glTexCoord2f(2000.0f, 2000.0f); glVertex3f(-200, -200, 200);
-		glTexCoord2f(1000.0f, 2000.0f); glVertex3f(-200, -200, -200);
-		glTexCoord2f(1000.0f, 1000.0f); glVertex3f(200, -200, -200);
+		glTexCoord2f(0.666f, 0.333f); glVertex3f(200, -200, 200);
+		glTexCoord2f(0.666f, 0.666f); glVertex3f(-200, -200, 200);
+		glTexCoord2f(0.333f, 0.666f); glVertex3f(-200, -200, -200);
+		glTexCoord2f(0.333f, 0.333f); glVertex3f(200, -200, -200);
 		// bottom face
-		glTexCoord2f(2000.0f, 1000.0f); glVertex3f(200, 200, 200);
-		glTexCoord2f(3000.0f, 1000.0f); glVertex3f(-200, 200, 200);
-		glTexCoord2f(3000.0f, 2000.0f); glVertex3f(-200, 200, -200);
-		glTexCoord2f(2000.0f, 2000.0f); glVertex3f(200, 200, -200);
+		glTexCoord2f(0.666f, 0.333f); glVertex3f(200, 200, 200);
+		glTexCoord2f(1.0f, 0.333f); glVertex3f(-200, 200, 200);
+		glTexCoord2f(1.0f, 0.666f); glVertex3f(-200, 200, -200);
+		glTexCoord2f(0.666f, 0.666f); glVertex3f(200, 200, -200);
 		glEnd();
 
 		nightsky_texture_.getTextureReference().unbind();

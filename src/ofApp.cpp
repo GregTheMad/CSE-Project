@@ -23,6 +23,8 @@ ofApp::~ofApp() {
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+
+	ofEnableNormalizedTexCoords();
 	ofBackground(0, 255, 0);
 	ofEnableLighting();
 	_color = ofColor(100, 149, 237);
@@ -53,15 +55,19 @@ void ofApp::setup(){
 	hm_ = new engine::Heightmap(100, 20.0f);
 	hm_->Initialize();
 
-	//engine::LODModel t = engine::LODModel("Models/Suzanne0.ply", 0);
-	
-	testmodel = new engine::LODModel("Models/Suzanne0.ply", 0);
-
-	dynamic_cast<engine::LODModel*>(testmodel)->addLOD("Models/Suzanne0.ply", 10.0f);
-	dynamic_cast<engine::LODModel*>(testmodel)->addLOD("Models/Suzanne1.ply", 20.0f);
-	dynamic_cast<engine::LODModel*>(testmodel)->addLOD("Models/Suzanne2.ply", 3000.0f);
-	//testmodel->Initialize();
+	testmodel = new engine::TexturedModel("Models/Bunny_T.ply");
+	dynamic_cast<engine::TexturedModel*>(testmodel)->addTexture(engine::TextureType::Diffuse, "Textures/Bunny_N.png");
 	testmodel->m_transform.getPosition() = ofVec3f(0, 10, 10);
+	testmodel->Initialize();
+
+	//engine::LODModel t = engine::LODModel("Models/Suzanne0.ply", 0);
+
+	//testmodel = new engine::LODModel("Models/Suzanne0.ply", 0);
+
+	//dynamic_cast<engine::LODModel*>(testmodel)->addLOD("Models/Suzanne0.ply", 10.0f);
+	//dynamic_cast<engine::LODModel*>(testmodel)->addLOD("Models/Suzanne1.ply", 20.0f);
+	//dynamic_cast<engine::LODModel*>(testmodel)->addLOD("Models/Suzanne2.ply", 3000.0f);
+	////testmodel->Initialize();
 
 	scene.push_back(new engine::LODModel("", 0));
 	dynamic_cast<engine::LODModel*>(scene.back())->addLOD("Models/Dragon0.ply", 10.0f);
@@ -76,7 +82,7 @@ void ofApp::setup(){
 	dynamic_cast<engine::LODModel*>(scene.back())->addLOD("Models/Bunny2.ply", 3000.0f);
 	scene.back()->m_transform.getPosition() = ofVec3f(-20, 10, 10);
 	scene.back()->m_transform.getScale() = ofVec3f(2, 2, 2);
-
+	
 	cout << "test";
 }
 
