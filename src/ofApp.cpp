@@ -12,6 +12,15 @@ float deltaTime;
 float timeOfDay;
 float durationOfDay;
 
+ofApp::~ofApp() {
+	for (vector<engine::GameObject*>::iterator m = scene.begin(); m != scene.end(); m++)
+	{
+		delete *m;
+	}
+
+	scene.clear();
+}
+
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofBackground(0, 255, 0);
@@ -50,9 +59,25 @@ void ofApp::setup(){
 
 	dynamic_cast<engine::LODModel*>(testmodel)->addLOD("Models/Suzanne0.ply", 10.0f);
 	dynamic_cast<engine::LODModel*>(testmodel)->addLOD("Models/Suzanne1.ply", 20.0f);
-	dynamic_cast<engine::LODModel*>(testmodel)->addLOD("Models/Suzanne2.ply", 30.0f);
+	dynamic_cast<engine::LODModel*>(testmodel)->addLOD("Models/Suzanne2.ply", 3000.0f);
 	//testmodel->Initialize();
-	testmodel->m_transform.setPosition(ofVec3f(0, 10, 10));
+	testmodel->m_transform.getPosition() = ofVec3f(0, 10, 10);
+
+	scene.push_back(new engine::LODModel("", 0));
+	dynamic_cast<engine::LODModel*>(scene.back())->addLOD("Models/Dragon0.ply", 10.0f);
+	dynamic_cast<engine::LODModel*>(scene.back())->addLOD("Models/Dragon1.ply", 20.0f);
+	dynamic_cast<engine::LODModel*>(scene.back())->addLOD("Models/Dragon2.ply", 3000.0f);
+	scene.back()->m_transform.getPosition() = ofVec3f(-10, 10, 10);
+	scene.back()->m_transform.getScale() = ofVec3f(2, 2, 2);
+
+	scene.push_back(new engine::LODModel("", 0));
+	dynamic_cast<engine::LODModel*>(scene.back())->addLOD("Models/Bunny0.ply", 10.0f);
+	dynamic_cast<engine::LODModel*>(scene.back())->addLOD("Models/Bunny1.ply", 20.0f);
+	dynamic_cast<engine::LODModel*>(scene.back())->addLOD("Models/Bunny2.ply", 3000.0f);
+	scene.back()->m_transform.getPosition() = ofVec3f(-20, 10, 10);
+	scene.back()->m_transform.getScale() = ofVec3f(2, 2, 2);
+
+	cout << "test";
 }
 
 MarchingCube mc;
@@ -143,6 +168,11 @@ void ofApp::draw(){
 
 	hm_->Draw();
 	testmodel->Draw();
+
+	for (vector<engine::GameObject*>::iterator m = scene.begin(); m != scene.end(); m++)
+	{
+		dynamic_cast<engine::GameObject*>(*m)->Draw();
+	}
 
 	cam.end();
 	ofDisableDepthTest();

@@ -25,10 +25,13 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 		
+		~ofApp();
 private:
 	ofColor _color;
 	ofLight _sun;
 
 	engine::GameObject* hm_;
 	engine::GameObject* testmodel;
+
+	vector<engine::GameObject*> scene;
 };

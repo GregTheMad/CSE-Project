@@ -30,8 +30,6 @@ namespace engine
 				m_mesh.addIndex(x + (y + 1)* m_resolution);           // 10
 			}
 		}
-
-		cout << "test";
 	}
 
 	void Heightmap::Draw()
