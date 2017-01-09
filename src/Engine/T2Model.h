@@ -4,13 +4,13 @@
 
 namespace engine
 {
-	class TransparentModel : public GameObject
+	class T2Model : public GameObject
 	{
 	public:
-		inline TransparentModel(string filepath, float alpha) : m_filepath(filepath), m_alpha(alpha)
+		inline T2Model(string filepath, float alpha) : m_filepath(filepath), m_alpha(alpha)
 		{
 		}
-		~TransparentModel();
+		~T2Model();
 		virtual void Initialize() override;
 		virtual void Draw() override;
 		virtual void Update(float deltaTime) override;
@@ -19,5 +19,7 @@ namespace engine
 		string m_filepath;
 		float m_alpha;
 		ofMesh m_mesh;
+
+		std::vector<ofMeshFace> f;
 	};
 }

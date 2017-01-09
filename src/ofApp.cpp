@@ -4,13 +4,13 @@ using namespace std;
 
 ofCamera cam;
 bool keyIsDown[256];
-game::Skybox sky;
 ofVec3f _forward;
 float speed;
 float speedBoost;
 float deltaTime;
-float timeOfDay;
-float durationOfDay;
+
+engine::T2Model* ttest;
+engine::T2Model* ttest2;
 
 ofApp::~ofApp() {
 	for (vector<engine::GameObject*>::iterator m = scene.begin(); m != scene.end(); m++)
@@ -36,24 +36,31 @@ void ofApp::setup(){
 	cam.setFov(90);
 	cam.setNearClip(0.1f);
 	cam.setFarClip(1000.0f);
-	
 
 	_sun.setDirectional();
 	_sun.enable();
 	_sun.setPosition(0, 1, 0);
-
-	sky.initialize();
 
 	speed = 5.0f;
 	speedBoost = 3.0f;
 
 	deltaTime = 1.0f / 60.0f;
 
-	timeOfDay = 0;
-	durationOfDay = 30;
+	m_skybox = new engine::Skybox();
+	m_skybox->Initialize();
+	m_skybox->DurationOfDay = 30;
 
 	hm_ = new engine::Heightmap(100, 20.0f);
 	hm_->Initialize();
+
+	ttest = new engine::T2Model("Models/Bunny2.ply", 0.8f);
+	ttest->m_transform = engine::Transform(ofVec3f(0.0f, 0.0f, 0.0f));
+	ttest->Initialize();
+
+	//Copy Constructor?!
+	ttest2 = new engine::T2Model("Models/Bunny2.ply", 0.8f);
+	ttest2->m_transform = engine::Transform(ofVec3f(3.0f, 0.0f, 0.0f));
+	ttest2->Initialize();
 
 	testmodel = new engine::TexturedModel("Models/Bunny_T.ply");
 	dynamic_cast<engine::TexturedModel*>(testmodel)->addTexture(engine::TextureType::Diffuse, "Textures/Bunny_N.png");
@@ -82,7 +89,16 @@ void ofApp::setup(){
 	dynamic_cast<engine::LODModel*>(scene.back())->addLOD("Models/Bunny2.ply", 3000.0f);
 	scene.back()->m_transform.getPosition() = ofVec3f(-20, 10, 10);
 	scene.back()->m_transform.getScale() = ofVec3f(2, 2, 2);
+
+	scene.push_back(new engine::TransparentModel("Models/Bunny0.ply", 0.5f));
+	scene.back()->m_transform.getPosition() = ofVec3f(-30, 10, 10);
+	scene.back()->m_transform.getScale() = ofVec3f(2, 2, 2);
 	
+	for (vector<engine::GameObject*>::iterator m = scene.begin(); m != scene.end(); m++)
+	{
+	dynamic_cast<engine::GameObject*>(*m)->Initialize();
+	}
+
 	cout << "test";
 }
 
@@ -91,6 +107,13 @@ MarchingCube mc;
 //--------------------------------------------------------------
 void ofApp::update()
 {
+	m_skybox->Update(deltaTime);
+
+	/*for (vector<engine::GameObject*>::iterator m = scene.begin(); m != scene.end(); m++)
+	{
+		dynamic_cast<engine::GameObject*>(*m)->Update(deltaTime);
+	}*/
+
 	if (keyIsDown['e'])
 	{
 		_color.g -= 100;
@@ -114,7 +137,7 @@ void ofApp::update()
 	{
 		cam.setPosition(cam.getPosition() + _forward * speed * boost * deltaTime);
 	}
-	if (keyIsDown['s'])
+	else if (keyIsDown['s'])
 	{
 		cam.setPosition(cam.getPosition() - _forward * speed * boost * deltaTime);
 	}
@@ -123,7 +146,7 @@ void ofApp::update()
 	{
 		cam.setPosition(cam.getPosition() + right * speed * boost * deltaTime);
 	}
-	if (keyIsDown['a'])
+	else if (keyIsDown['a'])
 	{
 		cam.setPosition(cam.getPosition() - right * speed * boost * deltaTime);
 	}
@@ -136,12 +159,6 @@ void ofApp::update()
 	{
 		cam.setPosition(cam.getPosition() - up * speed * boost * deltaTime);
 	}
-
-	timeOfDay += deltaTime / durationOfDay;
-
-	if (timeOfDay > 1.0f) timeOfDay -= 1.0f;
-	else if (timeOfDay < 0.0f) timeOfDay += 1.0f;
-
 }
 
 //--------------------------------------------------------------
@@ -151,10 +168,8 @@ void ofApp::draw(){
 
 	gluLookAt(_forward.x, _forward.y, _forward.z, 0, 0, 0, 0, 1, 0);
 
-	//Draw Skybox
-	ofDisableLighting();
-	sky.draw(timeOfDay);
-	ofEnableLighting();
+	//Draw Skybox	
+	m_skybox->Draw();	
 
 	//Set Tags for Maching Cube rendering
 	glEnable(GL_CULL_FACE);
@@ -162,7 +177,7 @@ void ofApp::draw(){
 	cam.begin();
 
 	//Set Sun orientation
-	_sun.setOrientation(ofVec3f(-timeOfDay * 360, 90, 0));
+	_sun.setOrientation(ofVec3f(-m_skybox->TimeOfDay * 360, 90, 0));
 	
 	//Draw Maching Cube Mesh
 	mc.drawMesh();
@@ -172,6 +187,7 @@ void ofApp::draw(){
 	ofSetColor(255, 255, 255);
 	ofDrawIcoSphere(8,8,8,-2);
 
+	
 	hm_->Draw();
 	testmodel->Draw();
 
@@ -179,6 +195,9 @@ void ofApp::draw(){
 	{
 		dynamic_cast<engine::GameObject*>(*m)->Draw();
 	}
+	
+	ttest->Draw();
+	ttest2->Draw();
 
 	cam.end();
 	ofDisableDepthTest();
@@ -209,11 +228,16 @@ void ofApp::keyReleased(int key)
 }
 
 //--------------------------------------------------------------
+void ofApp::mouseMoved(int x, int y )
+{
+	
+}
+
+//--------------------------------------------------------------
 float previous_x = 0;
 float previous_y = 0;
 bool mouse_set = false;
-void ofApp::mouseMoved(int x, int y )
-{
+void ofApp::mouseDragged(int x, int y, int button){
 	//Make sure there are values to compare later on on the first frame.
 	if (!mouse_set)
 	{
@@ -229,7 +253,7 @@ void ofApp::mouseMoved(int x, int y )
 		previous_y = y;
 	}
 
-	cam.setOrientation(cam.getOrientationEuler() + ofVec3f(0,(previous_x - (float)x)*0.2f,0));
+	cam.setOrientation(cam.getOrientationEuler() + ofVec3f(0, (previous_x - (float)x)*0.2f, 0));
 
 	//Check angle to make sure camera doesn't flip over or devides by 0.
 	float xOrentation = cam.getOrientationEuler().x + ((previous_y - (float)y)*0.2f);
@@ -239,11 +263,6 @@ void ofApp::mouseMoved(int x, int y )
 
 	previous_x = x;
 	previous_y = y;
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
 }
 
 //--------------------------------------------------------------

@@ -1,19 +1,25 @@
 ﻿#pragma once
-#include "ofMain.h"
+#include "GameObject.h"
+#include "ofxAssimpModelLoader.h"
 #include "ofMath.h"
 
-namespace game
+namespace engine
 {
-	class Skybox
+	class Skybox : public GameObject
 	{
 	public:
-		void draw(float timeOfDay);
-		void initialize();
+		Skybox();
+		inline ~Skybox() {};
+		virtual void Update(float deltaTime) override;
+		virtual void Draw() override;
+		virtual void Initialize() override;
+
+		float DurationOfDay;
+		float TimeOfDay;
 	private:
 		ofMesh background_mesh;
 		ofTexture backgr_texture;
 		ofMesh sun_mesh;
-		float durationOfDay;
 		ofMesh air_scatter_mesh_;
 		ofImage nightsky_texture_;
 	};

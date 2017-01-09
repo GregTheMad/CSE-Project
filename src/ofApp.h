@@ -30,6 +30,8 @@ private:
 	ofColor _color;
 	ofLight _sun;
 
+	engine::Skybox* m_skybox;
+
 	engine::GameObject* hm_;
 	engine::GameObject* testmodel;
 
