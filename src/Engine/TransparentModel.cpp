@@ -7,8 +7,8 @@ namespace engine
 
 	void TransparentModel::Initialize()
 	{
+		ofLog(OF_LOG_NOTICE, "Initializing TransparentModel: " + m_filepath);
 		m_mesh.load(m_filepath);
-
 	}
 
 	void TransparentModel::Update(float deltaTime)

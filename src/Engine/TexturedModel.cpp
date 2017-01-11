@@ -9,16 +9,18 @@ namespace engine
 
 	void TexturedModel::Initialize()
 	{
+		ofLog(OF_LOG_NOTICE, "Initializing TexturedModel: " + m_mesh_path);
+
+		ofLog(OF_LOG_NOTICE, "---Loading Mesh");
 		if ( !m_mesh_path.empty())
 		{
 			ofxAssimpModelLoader m;
 			m.loadModel(m_mesh_path);
 			m_mesh = m.getMesh(0);
 			m_mesh.enableTextures();
-
-			if (m_mesh.hasTexCoords()) cout << "has coords\n";
 		}
 
+		ofLog(OF_LOG_NOTICE, "---Loading Texture");
 		if (!m_diffuse_path.empty())
 		{
 			ofImage i;

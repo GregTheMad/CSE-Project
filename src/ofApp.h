@@ -36,4 +36,6 @@ private:
 	engine::GameObject* testmodel;
 
 	vector<engine::GameObject*> scene;
+	vector<engine::GameObject*> transparentScene;
+	map<float, int> tRenderingOrder;	
 };

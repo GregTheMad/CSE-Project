@@ -1,4 +1,5 @@
-﻿  Heightmap.cpp
+﻿  ofApp.cpp
+     Creating library bin\mySketch_debug.lib and object bin\mySketch_debug.exp
   mySketch.vcxproj -> D:\FHPro\CSE\mySketch\bin\mySketch_debug.exe
   mySketch.vcxproj -> bin\mySketch_debug.pdb (Full PDB)
   

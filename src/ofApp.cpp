@@ -53,19 +53,11 @@ void ofApp::setup(){
 	hm_ = new engine::Heightmap(100, 20.0f);
 	hm_->Initialize();
 
-	ttest = new engine::T2Model("Models/Bunny2.ply", 0.8f);
-	ttest->m_transform = engine::Transform(ofVec3f(0.0f, 0.0f, 0.0f));
-	ttest->Initialize();
-
-	//Copy Constructor?!
-	ttest2 = new engine::T2Model("Models/Bunny2.ply", 0.8f);
-	ttest2->m_transform = engine::Transform(ofVec3f(3.0f, 0.0f, 0.0f));
-	ttest2->Initialize();
-
-	testmodel = new engine::TexturedModel("Models/Bunny_T.ply");
-	dynamic_cast<engine::TexturedModel*>(testmodel)->addTexture(engine::TextureType::Diffuse, "Textures/Bunny_N.png");
-	testmodel->m_transform.getPosition() = ofVec3f(0, 10, 10);
-	testmodel->Initialize();
+	scene.push_back(new engine::TexturedModel("Models/Bunny_T.ply"));
+	dynamic_cast<engine::TexturedModel*>(scene.back())->addTexture(engine::TextureType::Diffuse, "Textures/Bunny_N.png");
+	scene.back()->m_transform.getPosition() = ofVec3f(0, 10, 0);
+	scene.back()->m_transform.getRotation() *= ofQuaternion(-90, ofVec3f(1, 0, 0));
+	scene.back()->Initialize();
 
 	//engine::LODModel t = engine::LODModel("Models/Suzanne0.ply", 0);
 
@@ -76,27 +68,57 @@ void ofApp::setup(){
 	//dynamic_cast<engine::LODModel*>(testmodel)->addLOD("Models/Suzanne2.ply", 3000.0f);
 	////testmodel->Initialize();
 
-	scene.push_back(new engine::LODModel("", 0));
+	scene.push_back(new engine::LODModel("Dragon", 0));
 	dynamic_cast<engine::LODModel*>(scene.back())->addLOD("Models/Dragon0.ply", 10.0f);
 	dynamic_cast<engine::LODModel*>(scene.back())->addLOD("Models/Dragon1.ply", 20.0f);
 	dynamic_cast<engine::LODModel*>(scene.back())->addLOD("Models/Dragon2.ply", 3000.0f);
 	scene.back()->m_transform.getPosition() = ofVec3f(-10, 10, 10);
 	scene.back()->m_transform.getScale() = ofVec3f(2, 2, 2);
 
-	scene.push_back(new engine::LODModel("", 0));
+	scene.push_back(new engine::LODModel("Bunny", 0));
 	dynamic_cast<engine::LODModel*>(scene.back())->addLOD("Models/Bunny0.ply", 10.0f);
 	dynamic_cast<engine::LODModel*>(scene.back())->addLOD("Models/Bunny1.ply", 20.0f);
 	dynamic_cast<engine::LODModel*>(scene.back())->addLOD("Models/Bunny2.ply", 3000.0f);
+	scene.back()->m_transform.getPosition() = ofVec3f(0, 10, 10);
+	scene.back()->m_transform.getScale() = ofVec3f(2, 2, 2);
+
+	scene.push_back(new engine::LODModel("Horse", 0));
+	dynamic_cast<engine::LODModel*>(scene.back())->addLOD("Models/Horse0.ply", 10.0f);
+	dynamic_cast<engine::LODModel*>(scene.back())->addLOD("Models/Horse1.ply", 20.0f);
+	dynamic_cast<engine::LODModel*>(scene.back())->addLOD("Models/Horse2.ply", 3000.0f);
 	scene.back()->m_transform.getPosition() = ofVec3f(-20, 10, 10);
 	scene.back()->m_transform.getScale() = ofVec3f(2, 2, 2);
 
-	scene.push_back(new engine::TransparentModel("Models/Bunny0.ply", 0.5f));
-	scene.back()->m_transform.getPosition() = ofVec3f(-30, 10, 10);
+	scene.push_back(new engine::LODModel("BunnySkeleton", 0));
+	dynamic_cast<engine::LODModel*>(scene.back())->addLOD("Models/BunnyS.ply", 100.0f);
+	scene.back()->m_transform.getPosition() = ofVec3f(0, 10, 20);
 	scene.back()->m_transform.getScale() = ofVec3f(2, 2, 2);
-	
+
+	//Transparent Objects
+	transparentScene.push_back(new engine::TransparentModel("Models/Bunny0.ply", 0.5f));
+	transparentScene.back()->m_transform.getPosition() = ofVec3f(0, 10, 20);
+	transparentScene.back()->m_transform.getScale() = ofVec3f(2, 2, 2);
+
+	transparentScene.push_back(new engine::TransparentModel("Models/Dragon0.ply", 0.8f));
+	transparentScene.back()->m_transform = engine::Transform(ofVec3f(-10.0f, 10.0f, 20.0f));
+	transparentScene.back()->m_transform.getScale() = ofVec3f(2, 2, 2);
+
+	transparentScene.push_back(new engine::TransparentModel("Models/Horse0.ply", 0.8f));
+	transparentScene.back()->m_transform = engine::Transform(ofVec3f(-20.0f, 10.0f, 20.0f));
+	transparentScene.back()->m_transform.getScale() = ofVec3f(2, 2, 2);
+
+	//tRenderingOrder = *new map<float, int>();
+	//tRenderingOrder.clear();
+
+	//Initializing
 	for (vector<engine::GameObject*>::iterator m = scene.begin(); m != scene.end(); m++)
 	{
-	dynamic_cast<engine::GameObject*>(*m)->Initialize();
+		dynamic_cast<engine::GameObject*>(*m)->Initialize();
+	}
+
+	for (vector<engine::GameObject*>::iterator m = transparentScene.begin(); m != transparentScene.end(); m++)
+	{
+		dynamic_cast<engine::GameObject*>(*m)->Initialize();
 	}
 
 	cout << "test";
@@ -107,6 +129,8 @@ MarchingCube mc;
 //--------------------------------------------------------------
 void ofApp::update()
 {
+	deltaTime = ofGetLastFrameTime();
+
 	m_skybox->Update(deltaTime);
 
 	/*for (vector<engine::GameObject*>::iterator m = scene.begin(); m != scene.end(); m++)
@@ -166,10 +190,11 @@ void ofApp::draw(){
 	ofBackground(_color);
 	glLoadIdentity();
 
+	glPushMatrix();
 	gluLookAt(_forward.x, _forward.y, _forward.z, 0, 0, 0, 0, 1, 0);
-
 	//Draw Skybox	
 	m_skybox->Draw();	
+	glPopMatrix();
 
 	//Set Tags for Maching Cube rendering
 	glEnable(GL_CULL_FACE);
@@ -180,28 +205,55 @@ void ofApp::draw(){
 	_sun.setOrientation(ofVec3f(-m_skybox->TimeOfDay * 360, 90, 0));
 	
 	//Draw Maching Cube Mesh
-	mc.drawMesh();
+	//mc.drawMesh();
 
 	//Draw Icosphere to show lighting.
 	//Sphere has to be drawn with radius of -2 to have the normals correctly (for some unknown reason)
 	ofSetColor(255, 255, 255);
 	ofDrawIcoSphere(8,8,8,-2);
-
 	
 	hm_->Draw();
-	testmodel->Draw();
+	//testmodel->Draw();
 
 	for (vector<engine::GameObject*>::iterator m = scene.begin(); m != scene.end(); m++)
 	{
 		dynamic_cast<engine::GameObject*>(*m)->Draw();
 	}
 	
-	ttest->Draw();
-	ttest2->Draw();
+	//ttest->Draw();
+	//ttest2->Draw();
+
+	for (vector<engine::GameObject*>::iterator m = scene.begin(); m != scene.end(); m++)
+	{
+		dynamic_cast<engine::GameObject*>(*m)->Draw();
+	}
+
+	float f;
+	
+	//for (vector<engine::GameObject*>::iterator m = transparentScene.begin(); m != transparentScene.end(); m++)
+	for (size_t i = 0; i < transparentScene.size(); i++)
+	{
+		//dynamic_cast<engine::GameObject*>(*m)->Draw();
+		f = ofVec3f(transparentScene[i]->m_transform.getPosition() - cam.getPosition()).length();
+
+		tRenderingOrder.insert(make_pair(-f, i));
+	}
+
+	//for (auto m = tRenderingOrder.end(); m != tRenderingOrder.begin(); m--)
+	for (auto m : tRenderingOrder)
+	{
+		transparentScene[m.second]->Draw();
+	}
+	tRenderingOrder.clear();
 
 	cam.end();
 	ofDisableDepthTest();
 	glDisable(GL_CULL_FACE);
+
+	//Drawing UI
+	glLoadIdentity();
+	ofSetColor(255, 0, 0, 255);
+	ofDrawBitmapString("Frametime: " + std::to_string(ofGetLastFrameTime()), 10, 10, 10);
 }
 
 //--------------------------------------------------------------

@@ -7,7 +7,7 @@ namespace engine
 		public GameObject
 	{
 	public:
-		inline LODModel(string filepath, size_t lodLevels) : m_filepath(filepath), m_lodLevels(lodLevels)
+		inline LODModel(string name, size_t lodLevels) : m_name(name), m_lodLevels(lodLevels)
 		{};
 		~LODModel();
 		virtual void Initialize() override;
@@ -15,9 +15,8 @@ namespace engine
 		virtual void Update(float deltaTime) override;
 		void addLOD(string filepath, float maxDistance);
 	private:
-		string m_filepath;
+		string m_name;
 		size_t m_lodLevels;
-		ofMesh m_mesh;
 		vector<ofMesh> m_meshs;
 		vector<float> m_distances;
 	};

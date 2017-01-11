@@ -22,13 +22,13 @@ namespace engine
 
 	void Skybox::Draw()
 	{
+		glPushMatrix();
 		ofDisableLighting();
+		ofDisableDepthTest();
 		glEnable(GL_TEXTURE_2D);
 
 		glColor3f(1, 1, 1);
-
 		glScalef(10, 10, 10);
-
 		glRotatef(TimeOfDay * 360, 0, 0, 1);
 
 		glPushMatrix();
@@ -39,46 +39,47 @@ namespace engine
 		glRotatef(90, 0, 0, 1);
 		glRotatef(90, 1, 0, 0);
 
-		//background_mesh.draw();
+		background_mesh.draw();
 
-		//Draw Galactic Background
-		glBegin(GL_QUADS);
-		// front face
-		glTexCoord2f(0.333f, 0.333f); glVertex3f(-200, 200, 200);
-		glTexCoord2f(0.0f, 0.333f); glVertex3f(200, 200, 200);
-		glTexCoord2f(0.0f, 0.0f); glVertex3f(200, -200, 200);
-		glTexCoord2f(0.333f, 0.0f); glVertex3f(-200, -200, 200);
-		// right face
-		glTexCoord2f(0.333f, 0.333f); glVertex3f(-200, 200, 200);
-		glTexCoord2f(0.666f, 0.333f); glVertex3f(-200, 200, -200);
-		glTexCoord2f(0.666f, 0.0f); glVertex3f(-200, -200, -200);
-		glTexCoord2f(0.333f, 0.0f); glVertex3f(-200, -200, 200);
-		// back face
-		glTexCoord2f(0.666f, 0.333f); glVertex3f(-200, 200, -200);
-		glTexCoord2f(1.0f, 0.333f); glVertex3f(200, 200, -200);
-		glTexCoord2f(1.0f, 0.0f); glVertex3f(200, -200, -200);
-		glTexCoord2f(0.666f, 0.0f); glVertex3f(-200, -200, -200);
-		// left face
-		glTexCoord2f(0.0f, 0.666f); glVertex3f(200, 200, -200);
-		glTexCoord2f(0.333f, 0.666f); glVertex3f(200, 200, 200);
-		glTexCoord2f(0.333f, 0.333f); glVertex3f(200, -200, 200);
-		glTexCoord2f(0.0f, 0.333f); glVertex3f(200, -200, -200);
-		// top face
-		glTexCoord2f(0.666f, 0.333f); glVertex3f(200, -200, 200);
-		glTexCoord2f(0.666f, 0.666f); glVertex3f(-200, -200, 200);
-		glTexCoord2f(0.333f, 0.666f); glVertex3f(-200, -200, -200);
-		glTexCoord2f(0.333f, 0.333f); glVertex3f(200, -200, -200);
-		// bottom face
-		glTexCoord2f(0.666f, 0.333f); glVertex3f(200, 200, 200);
-		glTexCoord2f(1.0f, 0.333f); glVertex3f(-200, 200, 200);
-		glTexCoord2f(1.0f, 0.666f); glVertex3f(-200, 200, -200);
-		glTexCoord2f(0.666f, 0.666f); glVertex3f(200, 200, -200);
-		glEnd();
+		////Draw Galactic Background
+		//glBegin(GL_QUADS);
+		//// front face
+		//glTexCoord2f(0.333f, 0.333f); glVertex3f(-200, 200, 200);
+		//glTexCoord2f(0.0f, 0.333f); glVertex3f(200, 200, 200);
+		//glTexCoord2f(0.0f, 0.0f); glVertex3f(200, -200, 200);
+		//glTexCoord2f(0.333f, 0.0f); glVertex3f(-200, -200, 200);
+		//// right face
+		//glTexCoord2f(0.333f, 0.333f); glVertex3f(-200, 200, 200);
+		//glTexCoord2f(0.666f, 0.333f); glVertex3f(-200, 200, -200);
+		//glTexCoord2f(0.666f, 0.0f); glVertex3f(-200, -200, -200);
+		//glTexCoord2f(0.333f, 0.0f); glVertex3f(-200, -200, 200);
+		//// back face
+		//glTexCoord2f(0.666f, 0.333f); glVertex3f(-200, 200, -200);
+		//glTexCoord2f(1.0f, 0.333f); glVertex3f(200, 200, -200);
+		//glTexCoord2f(1.0f, 0.0f); glVertex3f(200, -200, -200);
+		//glTexCoord2f(0.666f, 0.0f); glVertex3f(-200, -200, -200);
+		//// left face
+		//glTexCoord2f(0.0f, 0.666f); glVertex3f(200, 200, -200);
+		//glTexCoord2f(0.333f, 0.666f); glVertex3f(200, 200, 200);
+		//glTexCoord2f(0.333f, 0.333f); glVertex3f(200, -200, 200);
+		//glTexCoord2f(0.0f, 0.333f); glVertex3f(200, -200, -200);
+		//// top face
+		//glTexCoord2f(0.666f, 0.333f); glVertex3f(200, -200, 200);
+		//glTexCoord2f(0.666f, 0.666f); glVertex3f(-200, -200, 200);
+		//glTexCoord2f(0.333f, 0.666f); glVertex3f(-200, -200, -200);
+		//glTexCoord2f(0.333f, 0.333f); glVertex3f(200, -200, -200);
+		//// bottom face
+		//glTexCoord2f(0.666f, 0.333f); glVertex3f(200, 200, 200);
+		//glTexCoord2f(1.0f, 0.333f); glVertex3f(-200, 200, 200);
+		//glTexCoord2f(1.0f, 0.666f); glVertex3f(-200, 200, -200);
+		//glTexCoord2f(0.666f, 0.666f); glVertex3f(200, 200, -200);
+		//glEnd();
 
 		nightsky_texture_.getTextureReference().unbind();
 		glDisable(GL_TEXTURE_2D);
 
 		glPopMatrix();
+
 
 		ofSetColor(100, 149, 237, CLAMP(sin(TimeOfDay * PI * 2) * -1, 0, 0.5f) * 255 * 2);
 		
@@ -88,11 +89,14 @@ namespace engine
 		
 		glTranslatef(50, 0, 0);
 		glRotatef(90, 0, 1, 0);
-		
+
 		//glColor3f(255, 255, 200);
 		ofDrawIcoSphere(1);
 
+		ofDisableDepthTest();
 		ofEnableLighting();
+
+		glPopMatrix();
 	}
 
 	void Skybox::Update(float deltaTime) {

@@ -8,7 +8,7 @@ namespace engine
 
 	void LODModel::Initialize()
 	{
-		m_mesh.load(m_filepath);
+		ofLog(OF_LOG_NOTICE, "Initializing LODModel: " + m_name);
 	};
 
 	void LODModel::Draw()
@@ -21,11 +21,7 @@ namespace engine
 		glRotatef(m_transform.getRotation().getEuler().z, 0, 0, 1);
 		glScalef(m_transform.getScale().x, m_transform.getScale().y, m_transform.getScale().z);
 
-		/*ofTranslate(m_transform.getPosition()->x, m_transform.getPosition()->y, m_transform.getPosition()->z);
-		ofRotate(m_transform.getRotation()->getEuler().x, 1, 0, 0);
-		ofRotate(m_transform.getRotation()->getEuler().y, 0, 1, 0);
-		ofRotate(m_transform.getRotation()->getEuler().z, 0, 0, 1);
-		ofScale(m_transform.getScale()->x, m_transform.getScale()->y, m_transform.getScale()->z);*/
+		ofSetColor(255, 255, 255, 255);
 
 		GLfloat matrix[16];
 		glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
@@ -51,6 +47,8 @@ namespace engine
 
 	void LODModel::addLOD(string filepath, float maxDistance)
 	{
+		ofLog(OF_LOG_NOTICE, "---Adding LOD: " + m_name);
+
 		ofMesh m;
 		m.load(filepath);
 		m_meshs.push_back(m);

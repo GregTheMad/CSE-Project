@@ -7,6 +7,8 @@ namespace engine
 
 	void T2Model::Initialize()
 	{
+		ofLog(OF_LOG_NOTICE, "Initializing T2Model: " + m_filepath);
+
 		m_mesh.load(m_filepath);
 
 		std::vector<ofPoint> v = m_mesh.getVertices();
